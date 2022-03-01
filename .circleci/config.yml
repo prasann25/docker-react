@@ -10,7 +10,7 @@ version: 2
 workflows:
   my-workflow:
     jobs:
-      - run-tests:
+      - build:
           context:
             - org-global
             - my-docker-context

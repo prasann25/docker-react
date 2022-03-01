@@ -27,7 +27,7 @@ jobs:
           command: |
             echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
             docker build -t prasagr/docker-react -f Dockerfile.dev .
-       - run: 
+      - run: 
           name: Docker run npm test
           command: docker run -e CI=true prasagr/docker-react npm run test
      # - run:

@@ -20,7 +20,9 @@ jobs:
     steps:
       - checkout
       - run: echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
-      - run: docker build -t prasagra/docker-react -f Dockerfile.dev .
+      - run:
+          name: Docker build image from Dockerfile.dev
+          command: docker build -t prasagra/docker-react -f Dockerfile.dev .
       - run: docker run -e CI=true prasagra/docker-react npm run test
      # - run:
      #   name: Docker run image and perform npm run test

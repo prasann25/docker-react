@@ -8,7 +8,7 @@ version: 2.1
     # Inside the workflow, you define the jobs you want to run.
 
 workflows:
-  my-workflow:
+  docker-react-wf:
     jobs:
       - build:
           context:
@@ -19,9 +19,9 @@ jobs:
     machine: true
     steps:
       - checkout
-      - run: echo "$DOCKER_PASS1" | docker login --username $DOCKER_USER --password-stdin
-      - run: docker build -t prasagr/docker-react -f Dockerfile.dev .
-      - run: docker run -e CI=true prasagr/docker-react npm run test
+      - run: echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+      - run: docker build -t prasagra/docker-react -f Dockerfile.dev .
+      - run: docker run -e CI=true prasagra/docker-react npm run test
      # - run:
      #   name: Docker run image and perform npm run test
      #   command: |

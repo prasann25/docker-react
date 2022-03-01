@@ -3,8 +3,8 @@ version: 2.1
 
 # Orbs are reusable packages of CircleCI configuration that you may share across projects, enabling you to create encapsulated, parameterized commands, jobs, and executors that can be used across multiple projects.
 # See: https://circleci.com/docs/2.0/orb-intro/
-#orbs:
-  #node: circleci/node@4.7
+orbs:
+  node: circleci/node@4.7
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
@@ -12,19 +12,21 @@ version: 2.1
   #docker-react-wf: # This is the name of the workflow, feel free to change it to better match your workflow.
     # Inside the workflow, you define the jobs you want to run.
 
-jobs:
-  build:
-    working_directory: /app
-    docker:
-      - image: docker:17.05.0-ce-git
-    steps :
-      - checkout
-      - setup_remote_docker
-      - run:
-        name: Build Docker image from Dockerfile.dev
-        command: |
-          docker build -t prasagra/docker-react -f Dockerfile.dev .
-      - run:
-        name: Docker run image and perform npm run test
-        command: |
-          docker run -e CI=true prasagra/docker-react npm run test
+workflows:
+    docker-react-wf:
+        jobs:
+          build:
+            working_directory: /app
+            docker:
+              - image: docker:17.05.0-ce-git
+            steps :
+              - checkout
+              - setup_remote_docker
+              - run:
+                name: Build Docker image from Dockerfile.dev
+                command: |
+                  docker build -t prasagra/docker-react -f Dockerfile.dev .
+              - run:
+                name: Docker run image and perform npm run test
+                command: |
+                  docker run -e CI=true prasagra/docker-react npm run test

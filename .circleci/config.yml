@@ -1,5 +1,5 @@
 # This config is equivalent to both the '.circleci/extended/orb-free.yml' and the base '.circleci/config.yml'
-version: 2
+version: 2.1
 
 orbs: 
   aws-elastic-beanstalk: circleci/aws-elastic-beanstalk@2.0.1
@@ -11,9 +11,9 @@ orbs:
     # Inside the workflow, you define the jobs you want to run.
 
 workflows:
-  my-workflow:
+  docker-react-wf:
     jobs:
-      - run-tests:
+      - build:
           context:
             - org-global
             - my-docker-context
@@ -22,7 +22,7 @@ jobs:
     machine: true
     steps:
       - checkout
-      - run: 
+      - run:
           name: Docker build image
           command: |
             echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin

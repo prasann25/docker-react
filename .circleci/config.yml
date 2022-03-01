@@ -1,6 +1,9 @@
 # This config is equivalent to both the '.circleci/extended/orb-free.yml' and the base '.circleci/config.yml'
 version: 2
 
+orbs: 
+  aws-elastic-beanstalk: circleci/aws-elastic-beanstalk@2.0.1
+
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 #workflows:
@@ -19,10 +22,14 @@ jobs:
     machine: true
     steps:
       - checkout
-      - run: |
-        echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
-      - run: docker build -t prasagr/docker-react -f Dockerfile.dev .
-      - run: docker run -e CI=true prasagr/docker-react npm run test
+      - run: 
+          name: Docker build image
+          command: |
+            echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+            docker build -t prasagr/docker-react -f Dockerfile.dev .
+       - run: 
+          name: Docker run npm test
+          command: docker run -e CI=true prasagr/docker-react npm run test
      # - run:
      #   name: Docker run image and perform npm run test
      #   command: |

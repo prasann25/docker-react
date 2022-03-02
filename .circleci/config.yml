@@ -26,7 +26,7 @@ workflows:
           dockerfile: Dockerfile
           path: .          
           profile-name : default
-          repo:  ${CIRCLE_PROJECT_REPONAME}
+          repo:  ${ECR_REPO_NAME}
           tag: ${CIRCLE_BUILD_NUM}
 
 jobs:

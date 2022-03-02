@@ -2,7 +2,8 @@
 version: 2.1
 
 orbs: 
-  aws-elastic-beanstalk: circleci/aws-elastic-beanstalk@2.0.1
+  aws-ecr: circleci/aws-ecr@x.y.z # Use the AWS ECR orb in your config
+  aws-ecs: circleci/aws-ecs@2.2.1
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
@@ -17,6 +18,12 @@ workflows:
           context:
             - org-global
             - my-docker-context
+      - aws-ecr/build-and-push-image: # Use the pre-defined `build-and-push-image` job
+          dockerfile: Dockerfile
+          path: .          
+          repo: ${CIRCLE_PROJECT_REPONAME}
+          tag: ${CIRCLE_BUILD_NUM}
+
 jobs:
   build:
     machine: true
@@ -30,6 +37,8 @@ jobs:
       - run: 
           name: Docker run npm test
           command: docker run -e CI=true prasagr/docker-react npm run test
+
+      
      # - run:
      #   name: Docker run image and perform npm run test
      #   command: |

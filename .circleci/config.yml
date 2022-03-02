@@ -21,7 +21,8 @@ workflows:
       - aws-ecr/build-and-push-image: # Use the pre-defined `build-and-push-image` job
           dockerfile: Dockerfile
           path: .          
-          repo: ${CIRCLE_PROJECT_REPONAME}
+          profile-name : default
+          repo:  ${CIRCLE_PROJECT_REPONAME}
           tag: ${CIRCLE_BUILD_NUM}
 
 jobs:

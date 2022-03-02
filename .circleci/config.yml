@@ -4,7 +4,6 @@ version: 2.1
 orbs: 
   aws-ecr: circleci/aws-ecr@6.15 # Use the AWS ECR orb in your config
   aws-ecs: circleci/aws-ecs@2.0.0
-  aws-cli: circleci/aws-cli@2.1.0
 
 
 # Invoke jobs via workflows
@@ -16,11 +15,14 @@ orbs:
 workflows:
   docker-react-wf:
     jobs:
-      - build:
+      #- build:
+      #    context:
+      #      - org-global
+      #      - my-docker-context
+      - aws-ecr/build-and-push-image: # Use the pre-defined `build-and-push-image` job
           context:
             - org-global
             - my-docker-context
-      - aws-ecr/build-and-push-image: # Use the pre-defined `build-and-push-image` job
           dockerfile: Dockerfile
           path: .          
           profile-name : default

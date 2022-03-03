@@ -26,7 +26,7 @@ workflows:
           dockerfile: Dockerfile
           path: .          
           profile-name : default
-          repo:  ${ECR_REPO_NAME}
+          repo:  ${AWS_RESOURCE_NAME_PREFIX}
           tag: ${CIRCLE_BUILD_NUM}
 
 jobs:
